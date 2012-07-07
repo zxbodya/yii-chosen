@@ -6,7 +6,6 @@ Chosen usage instructions
 
 Example:
 
-    :::php
     $this->widget('ext.chosen.Chosen',array(
         'name' => 'inputName', // input name
         'value' => '2', // selection
@@ -22,7 +21,6 @@ Also you can use it like CHtml helper
 ----------------------------------------
 Before this import ext.chosen.Chosen, you can add it to config/main.php or call Yii::import('ext.chosen.Chosen') before usage.
 
-    :::php
 	Chosen::dropDownList($name, $select, $data, $htmlOptions);
     Chosen::activeDropDownList($model, $attribute, $data, $htmlOptions);
     Chosen::multiSelect($name, $select, $data, $htmlOptions);
