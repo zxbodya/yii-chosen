@@ -1,9 +1,10 @@
 Chosen usage instructions
-===
+===========================
 
 1. Checkout source code to your project, for example to ext.chosen.
+2. Use it, as any input widget.
 
-2. Use it, as any input widget, for example:
+Example:
 <pre>
     $this->widget('ext.chosen.Chosen',array(
         'name' => 'inputName', // input name
@@ -17,14 +18,12 @@ Chosen usage instructions
     ));
 </pre>
 
-3. Also you can use it like CHtml helper:
-    1. In config/main.php add:
-    'import' => array(
-        'ext.chosen.Chosen',
-    ),
-
-    2. Use
-        Chosen::dropDownList($name, $select, $data, $htmlOptions);
-        Chosen::activeDropDownList($model, $attribute, $data, $htmlOptions);
-        Chosen::multiSelect($name, $select, $data, $htmlOptions);
-        Chosen::activeMultiSelect($model, $attribute, $data, $htmlOptions);
+Also you can use it like CHtml helper
+----------------------------------------
+Before this import ext.chosen.Chosen, you can add it to config/main.php or call Yii::import('ext.chosen.Chosen') before usage.
+<pre>
+	Chosen::dropDownList($name, $select, $data, $htmlOptions);
+    Chosen::activeDropDownList($model, $attribute, $data, $htmlOptions);
+    Chosen::multiSelect($name, $select, $data, $htmlOptions);
+    Chosen::activeMultiSelect($model, $attribute, $data, $htmlOptions);
+</pre>
