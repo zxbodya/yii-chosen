@@ -124,8 +124,8 @@ class Chosen extends CInputWidget
     /** Multiple items select */
     public static function multiSelect($name, $select, $data, $htmlOptions = array())
     {
-        if(substr($name,-2)!=='[]')
-            $name.='[]';
+        if (substr($name, -2) !== '[]')
+            $name .= '[]';
 
         return Yii::app()->getController()->widget(__CLASS__, array(
             'name' => $name,
@@ -138,7 +138,7 @@ class Chosen extends CInputWidget
 
     public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array())
     {
-        return self::multiSelect(CHtml::activeName($model, $attribute).'[]', CHtml::value($model, $attribute), $data, $htmlOptions);
+        return self::multiSelect(CHtml::activeName($model, $attribute) . '[]', CHtml::value($model, $attribute), $data, $htmlOptions);
     }
 
 
