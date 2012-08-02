@@ -94,7 +94,7 @@ class Chosen extends CInputWidget
     {
         $cs = Yii::app()->getClientScript();
         $cs->registerCoreScript('jquery');
-        if (defined('DEBUG'))
+        if (defined('YII_DEBUG'))
             $cs->registerScriptFile($this->assetsDir . '/chosen.jquery.js');
         else
             $cs->registerScriptFile($this->assetsDir . '/chosen.jquery.min.js');
