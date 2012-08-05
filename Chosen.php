@@ -81,8 +81,11 @@ class Chosen extends CInputWidget
         if (isset($this->htmlOptions['name']))
             $name = $this->htmlOptions['name'];
 
+        if ($this->multiple && substr($name, -2) !== '[]')
+            $name .= '[]';
+
         if (isset($this->model)) {
-            echo CHtml::dropDownList($name, $this->model->{$this->attribute}, $this->data, $this->htmlOptions);
+            echo CHtml::dropDownList($name, CHtml::value($this->model, $this->attribute), $this->data, $this->htmlOptions);
         } else {
             echo CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions);
         }
