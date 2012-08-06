@@ -36,6 +36,8 @@ class Chosen extends CInputWidget
 
     /** @var array See CHtml::listData() */
     public $data;
+    /** @var bool hidden input with empty selection before widget, so if no option selected(with this option) - empty field would be send*/
+    public $sendEmpty = true;
 
     /** Publish assets and set default values for properties */
     public function init()
@@ -84,6 +86,9 @@ class Chosen extends CInputWidget
         if ($this->multiple && substr($name, -2) !== '[]')
             $name .= '[]';
 
+        if ($this->sendEmpty) {
+            echo CHtml::hiddenField($name, '', array('id' => false));
+        }
         if (isset($this->model)) {
             echo CHtml::dropDownList($name, CHtml::value($this->model, $this->attribute), $this->data, $this->htmlOptions);
         } else {
