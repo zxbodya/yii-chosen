@@ -86,8 +86,8 @@ class Chosen extends CInputWidget
         if ($this->multiple && substr($name, -2) !== '[]')
             $name .= '[]';
 
-        if ($this->sendEmpty) {
-            echo CHtml::hiddenField($name, '', array('id' => false));
+        if ($this->multiple && $this->sendEmpty) {
+            echo CHtml::hiddenField(substr($name, 0,-2), '', array('id' => false));
         }
         if (isset($this->model)) {
             echo CHtml::dropDownList($name, CHtml::value($this->model, $this->attribute), $this->data, $this->htmlOptions);
