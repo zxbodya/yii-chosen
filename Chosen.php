@@ -132,9 +132,6 @@ class Chosen extends CInputWidget
     /** Multiple items select */
     public static function multiSelect($name, $select, $data, $htmlOptions = array())
     {
-        if (substr($name, -2) !== '[]')
-            $name .= '[]';
-
         return Yii::app()->getController()->widget(__CLASS__, array(
             'name' => $name,
             'value' => $select,
