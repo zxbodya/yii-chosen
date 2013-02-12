@@ -126,7 +126,12 @@ class Chosen extends CInputWidget
 
     public static function activeDropDownList($model, $attribute, $data, $htmlOptions = array())
     {
-        return self::dropDownList(CHtml::activeName($model, $attribute), CHtml::value($model, $attribute), $data, $htmlOptions);
+        return Yii::app()->getController()->widget(__CLASS__, array(
+            'model' => $model,
+            'attribute' => $attribute,
+            'data' => $data,
+            'htmlOptions' => $htmlOptions,
+        ), true);
     }
 
     /** Multiple items select */
@@ -143,8 +148,12 @@ class Chosen extends CInputWidget
 
     public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array())
     {
-        return self::multiSelect(CHtml::activeName($model, $attribute) . '[]', CHtml::value($model, $attribute), $data, $htmlOptions);
+        return Yii::app()->getController()->widget(__CLASS__, array(
+            'model' => $model,
+            'attribute' => $attribute,
+            'data' => $data,
+            'htmlOptions' => $htmlOptions,
+            'multiple' => true,
+        ), true);
     }
-
-
 }
