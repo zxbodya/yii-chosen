@@ -90,7 +90,7 @@ class Chosen extends CInputWidget
             echo CHtml::hiddenField(substr($name, 0,-2), '', array('id' => false));
         }
         if (isset($this->model)) {
-            echo CHtml::dropDownList($name, CHtml::value($this->model, $this->attribute), $this->data, $this->htmlOptions);
+            echo CHtml::dropDownList($name, CHtml::resolveValue($this->model, $this->attribute), $this->data, $this->htmlOptions);
         } else {
             echo CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions);
         }
