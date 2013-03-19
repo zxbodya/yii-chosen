@@ -36,7 +36,7 @@ class Chosen extends CInputWidget
 
     /** @var array See CHtml::listData() */
     public $data;
-    /** @var bool hidden input with empty selection before widget, so if no option selected(with this option) - empty field would be send*/
+    /** @var bool hidden input with empty selection before widget, so if no option selected(with this option) - empty field would be send */
     public $sendEmpty = true;
 
     /** Publish assets and set default values for properties */
@@ -51,19 +51,19 @@ class Chosen extends CInputWidget
             elseif ($this->multiple)
                 $this->htmlOptions['multiple'] = true;
         }
-        if ($this->multiple) {
-            if (isset($this->placeholderMultiple))
-                $this->htmlOptions['data-placeholder'] = $this->placeholderMultiple;
-            else
-                $this->htmlOptions['data-placeholder'] = Yii::t('Chosen.main', "Select Some Options");
-        } else {
-
-            if (isset($this->placeholderSingle))
-                $this->htmlOptions['data-placeholder'] = $this->placeholderSingle;
-            else
-                $this->htmlOptions['data-placeholder'] = Yii::t('Chosen.main', "Select an Option");
+        if (!isset($this->htmlOptions['data-placeholder'])) {
+            if ($this->multiple) {
+                if (isset($this->placeholderMultiple))
+                    $this->htmlOptions['data-placeholder'] = $this->placeholderMultiple;
+                else
+                    $this->htmlOptions['data-placeholder'] = Yii::t('Chosen.main', "Select Some Options");
+            } else {
+                if (isset($this->placeholderSingle))
+                    $this->htmlOptions['data-placeholder'] = $this->placeholderSingle;
+                else
+                    $this->htmlOptions['data-placeholder'] = Yii::t('Chosen.main', "Select an Option");
+            }
         }
-
         if (isset($this->noResults))
             $this->settings['no_results_text'] = $this->noResults;
         else
@@ -87,7 +87,7 @@ class Chosen extends CInputWidget
             $name .= '[]';
 
         if ($this->multiple && $this->sendEmpty) {
-            echo CHtml::hiddenField(substr($name, 0,-2), '', array('id' => false));
+            echo CHtml::hiddenField(substr($name, 0, -2), '', array('id' => false));
         }
         if (isset($this->model)) {
             echo CHtml::dropDownList($name, CHtml::resolveValue($this->model, $this->attribute), $this->data, $this->htmlOptions);
