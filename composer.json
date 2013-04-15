@@ -4,6 +4,9 @@
     "homepage": "https://bitbucket.org/z_bodya/yii-chosen",
     "keywords": ["widget", "chosen", "ui"],
     "type": "yii-extension",
+    "extra": {
+        "installer-name": "chosen"
+    },
     "license": "BSD-3-Clause",
     "authors": [
         {
