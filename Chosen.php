@@ -113,47 +113,61 @@ class Chosen extends CInputWidget
         $cs->registerScript("{$id}_chosen", "$('#{$id}').chosen({$settings});");
     }
 
+    private static function widgetWithSettings($settings)
+    {
+        if (isset($htmlOptions['settings'])) {
+            $userSettings = $htmlOptions['settings'];
+            unset($htmlOptions['settings']);
+            $settings = array_merge($settings, $userSettings);
+        }
+        return Yii::app()->getController()->widget(__CLASS__, $settings, true);
+    }
+
     /** Single item select */
     public static function dropDownList($name, $select, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        $settings = array(
             'name' => $name,
             'value' => $select,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
-        ), true);
+        );
+        return self::widgetWithSettings($settings);
     }
 
     public static function activeDropDownList($model, $attribute, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        $settings = array(
             'model' => $model,
             'attribute' => $attribute,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
-        ), true);
+        );
+        return self::widgetWithSettings($settings);
     }
 
     /** Multiple items select */
     public static function multiSelect($name, $select, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        $settings = array(
             'name' => $name,
             'value' => $select,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
             'multiple' => true,
-        ), true);
+        );
+        return self::widgetWithSettings($settings);
     }
 
     public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        $settings = array(
             'model' => $model,
             'attribute' => $attribute,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
             'multiple' => true,
-        ), true);
+        );
+        return self::widgetWithSettings($settings);
     }
 }
