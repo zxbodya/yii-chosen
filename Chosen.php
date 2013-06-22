@@ -115,9 +115,9 @@ class Chosen extends CInputWidget
 
     private static function widgetWithSettings($settings)
     {
-        if (isset($htmlOptions['settings'])) {
-            $userSettings = $htmlOptions['settings'];
-            unset($htmlOptions['settings']);
+        if (isset($settings['htmlOptions']['settings'])) {
+            $userSettings = $settings['htmlOptions']['settings'];
+            unset($settings['htmlOptions']['settings']);
             $settings = array_merge($settings, $userSettings);
         }
         return Yii::app()->getController()->widget(__CLASS__, $settings, true);
