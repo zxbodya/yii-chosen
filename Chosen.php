@@ -39,6 +39,10 @@ class Chosen extends CInputWidget
     /** @var bool hidden input with empty selection before widget, so if no option selected(with this option) - empty field would be send */
     public $sendEmpty = true;
 
+    /** @var null|boolean False by default, if true search will find all matches(not only from string start) */
+
+    public $searchContains = null;
+
     /** Publish assets and set default values for properties */
     public function init()
     {
@@ -70,6 +74,10 @@ class Chosen extends CInputWidget
             $this->settings['no_results_text'] = Yii::t('Chosen.main', "No results match");
         if (!$this->multiple)
             $this->settings['allow_single_deselect'] = $this->allowSingleDeselect;
+
+        if(isset($this->searchContains)){
+            $this->settings['search_contains']= $this->searchContains;
+        }
     }
 
     /** Render widget html and register client scripts */
