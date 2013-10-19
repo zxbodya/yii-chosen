@@ -39,10 +39,6 @@ class Chosen extends CInputWidget
     /** @var bool hidden input with empty selection before widget, so if no option selected(with this option) - empty field would be send */
     public $sendEmpty = true;
 
-    /** @var null|boolean False by default, if true search will find all matches(not only from string start) */
-
-    public $searchContains = null;
-
     /** Publish assets and set default values for properties */
     public function init()
     {
@@ -74,10 +70,6 @@ class Chosen extends CInputWidget
             $this->settings['no_results_text'] = Yii::t('Chosen.main', "No results match");
         if (!$this->multiple)
             $this->settings['allow_single_deselect'] = $this->allowSingleDeselect;
-
-        if(isset($this->searchContains)){
-            $this->settings['search_contains']= $this->searchContains;
-        }
     }
 
     /** Render widget html and register client scripts */
@@ -110,72 +102,60 @@ class Chosen extends CInputWidget
     {
         $cs = Yii::app()->getClientScript();
         $cs->registerCoreScript('jquery');
-        if (defined('YII_DEBUG'))
+        if (defined('YII_DEBUG')) {
             $cs->registerScriptFile($this->assetsDir . '/chosen.jquery.js');
-        else
-            $cs->registerScriptFile($this->assetsDir . '/chosen.jquery.min.js');
 
-        $cs->registerCssFile($this->assetsDir . '/chosen.css');
+            $cs->registerCssFile($this->assetsDir . '/chosen.css');
+        } else {
+            $cs->registerScriptFile($this->assetsDir . '/chosen.jquery.min.js');
+            $cs->registerCssFile($this->assetsDir . '/chosen.min.css');
+        }
 
         $settings = CJavaScript::encode($this->settings);
         $cs->registerScript("{$id}_chosen", "$('#{$id}').chosen({$settings});");
     }
 
-    private static function widgetWithSettings($settings)
-    {
-        if (isset($settings['htmlOptions']['settings'])) {
-            $userSettings = $settings['htmlOptions']['settings'];
-            unset($settings['htmlOptions']['settings']);
-            $settings = array_merge($settings, $userSettings);
-        }
-        return Yii::app()->getController()->widget(__CLASS__, $settings, true);
-    }
-
     /** Single item select */
     public static function dropDownList($name, $select, $data, $htmlOptions = array())
     {
-        $settings = array(
+        return Yii::app()->getController()->widget(__CLASS__, array(
             'name' => $name,
             'value' => $select,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
-        );
-        return self::widgetWithSettings($settings);
+        ), true);
     }
 
     public static function activeDropDownList($model, $attribute, $data, $htmlOptions = array())
     {
-        $settings = array(
+        return Yii::app()->getController()->widget(__CLASS__, array(
             'model' => $model,
             'attribute' => $attribute,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
-        );
-        return self::widgetWithSettings($settings);
+        ), true);
     }
 
     /** Multiple items select */
     public static function multiSelect($name, $select, $data, $htmlOptions = array())
     {
-        $settings = array(
+        return Yii::app()->getController()->widget(__CLASS__, array(
             'name' => $name,
             'value' => $select,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
             'multiple' => true,
-        );
-        return self::widgetWithSettings($settings);
+        ), true);
     }
 
     public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array())
     {
-        $settings = array(
+        return Yii::app()->getController()->widget(__CLASS__, array(
             'model' => $model,
             'attribute' => $attribute,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
             'multiple' => true,
-        );
-        return self::widgetWithSettings($settings);
+        ), true);
     }
 }
