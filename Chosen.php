@@ -39,6 +39,27 @@ class Chosen extends CInputWidget
     /** @var bool hidden input with empty selection before widget, so if no option selected(with this option) - empty field would be send */
     public $sendEmpty = true;
 
+
+    /**
+     * The disableSearchThreshold option can be specified to hide the search input on single selects if there are fewer than (n) options.
+     * @var string|null
+     */
+    public $disableSearchThreshold;
+
+    /**
+     * You can limit how many options the user can select
+     * @var string|null
+     */
+    public $maxSelectedOptions;
+
+    public $disableSearch = false;
+    public $enableSplitWordSearch = true;
+    public $groupSearch = true;
+    public $searchContains = false;
+    public $singleBackstrokeDelete = true;
+    public $inheritSelectClasses = false;
+    public $displaySelectedOptions = true;
+
     /** Publish assets and set default values for properties */
     public function init()
     {
@@ -70,6 +91,16 @@ class Chosen extends CInputWidget
             $this->settings['no_results_text'] = Yii::t('Chosen.main', "No results match");
         if (!$this->multiple)
             $this->settings['allow_single_deselect'] = $this->allowSingleDeselect;
+
+        if (isset($this->maxSelectedOptions)) $this->settings['max_selected_options'] = $this->maxSelectedOptions;
+        if ($this->disableSearch !== false) $this->settings['disable_search'] = $this->disableSearch;
+        if ($this->enableSplitWordSearch !== true) $this->settings['enable_split_word_search'] = $this->enableSplitWordSearch;
+        if ($this->groupSearch !== true) $this->settings['group_search'] = $this->groupSearch;
+        if ($this->searchContains !== false) $this->settings['search_contains'] = $this->searchContains;
+        if ($this->singleBackstrokeDelete !== true) $this->settings['single_backstroke_delete'] = $this->singleBackstrokeDelete;
+        if ($this->inheritSelectClasses !== false) $this->settings['inherit_select_classes'] = $this->inheritSelectClasses;
+        if ($this->displaySelectedOptions !== true) $this->settings['display_selected_options'] = $this->displaySelectedOptions;
+
     }
 
     /** Render widget html and register client scripts */
@@ -118,44 +149,54 @@ class Chosen extends CInputWidget
     /** Single item select */
     public static function dropDownList($name, $select, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        return Yii::app()->getController()->widget(__CLASS__, self::buildConfig(array(
             'name' => $name,
             'value' => $select,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
-        ), true);
+        )), true);
     }
 
     public static function activeDropDownList($model, $attribute, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        return Yii::app()->getController()->widget(__CLASS__, self::buildConfig(array(
             'model' => $model,
             'attribute' => $attribute,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
-        ), true);
+        )), true);
     }
 
     /** Multiple items select */
     public static function multiSelect($name, $select, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        return Yii::app()->getController()->widget(__CLASS__, self::buildConfig(array(
             'name' => $name,
             'value' => $select,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
             'multiple' => true,
-        ), true);
+        )), true);
     }
 
     public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array())
     {
-        return Yii::app()->getController()->widget(__CLASS__, array(
+        return Yii::app()->getController()->widget(__CLASS__, self::buildConfig(array(
             'model' => $model,
             'attribute' => $attribute,
             'data' => $data,
             'htmlOptions' => $htmlOptions,
             'multiple' => true,
-        ), true);
+        )), true);
+    }
+
+    private static function buildConfig($config)
+    {
+        if (isset($config['htmlOptions']['options'])) {
+            $defaults = $config['htmlOptions']['options'];
+            unset($config['htmlOptions']['options']);
+            $config = array_merge($defaults, $config);
+        }
+        return $config;
     }
 }
